@@ -20,31 +20,37 @@ export default function AuthCallback() {
             }
 
             try {
+                console.log("[AuthCallback] Starting authentication with code:", code?.substring(0, 10) + "...");
+
                 // Pass the request to the backend via the proxy
-                // The backend will set the HttpOnly cookie in the response
+                // credentials: 'include' ensures cookies are sent and received
                 const response = await fetch(`/api/oauth/callback?code=${code}&state=${state}`, {
                     method: "GET",
+                    credentials: 'include', // Critical: allows cookies to be set
                     headers: {
-                        "Accept": "application/json" // Prefer JSON if backend supports it, but standard is redirect
+                        "Accept": "application/json"
                     }
                 });
 
-                // The backend returns a redirect to / (302). 
-                // Fetch API follows redirects automatically.
-                // If successful, we should land on a page (HTML) or get a success JSON.
-                // We just check if the final URL or status indicates success.
+                console.log("[AuthCallback] Response status:", response.status);
 
                 if (response.ok) {
-                    // We assume cookie is set. Redirect to admin.
+                    const data = await response.json();
+                    console.log("[AuthCallback] Success:", data);
+
+                    // Give the browser a moment to process the cookie
+                    await new Promise(resolve => setTimeout(resolve, 100));
+
+                    // Navigate to admin dashboard
                     navigate("/admin/demo");
                     toast.success("Login successful");
                 } else {
                     const text = await response.text();
-                    console.error("Login failed response:", text);
-                    setError("Login verification failed on server.");
+                    console.error("[AuthCallback] Login failed response:", text);
+                    setError(`Login verification failed: ${response.status}`);
                 }
             } catch (err) {
-                console.error("Login network error:", err);
+                console.error("[AuthCallback] Network error:", err);
                 setError("Network error during login verification.");
             }
         };
