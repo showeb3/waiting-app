@@ -22,9 +22,14 @@ export default function AuthCallback() {
             try {
                 console.log("[AuthCallback] Starting authentication with code:", code?.substring(0, 10) + "...");
 
-                // Pass the request to the backend via the proxy
+                // Construct the callback URL using environment variable
+                const apiUrl = import.meta.env.VITE_API_URL || '';
+                const callbackUrl = `${apiUrl}/api/oauth/callback?code=${code}&state=${state}`;
+                console.log("[AuthCallback] Calling:", callbackUrl);
+
+                // Pass the request to the backend directly
                 // credentials: 'include' ensures cookies are sent and received
-                const response = await fetch(`/api/oauth/callback?code=${code}&state=${state}`, {
+                const response = await fetch(callbackUrl, {
                     method: "GET",
                     credentials: 'include', // Critical: allows cookies to be set
                     headers: {
