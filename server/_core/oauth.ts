@@ -10,8 +10,9 @@ function getQueryParam(req: Request, key: string): string | undefined {
 }
 
 export function registerOAuthRoutes(app: Express) {
-  // Mock OAuth routes for local development
-  if (process.env.NODE_ENV === "development") {
+  // Mock OAuth routes for local development and demo production
+  // In a real app, you would use a real provider (Google, Auth0, etc.)
+  if (true || process.env.NODE_ENV === "development") {
     console.log("[OAuth] Mock routes registered");
 
     // 1. Mock Login Portal (Redirects back immediately)
