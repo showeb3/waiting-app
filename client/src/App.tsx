@@ -40,7 +40,15 @@ function Router() {
 
       {/* 404 */}
       <Route path={"/404"} component={NotFound} />
-      <Route component={NotFound} />
+      {/* 404 */}
+      <Route path={"/404"} component={NotFound} />
+      <Route>
+        {(params) => {
+          console.log("[Router] No match found. Current params:", params);
+          console.log("[Router] Current Location:", window.location.pathname);
+          return <NotFound />;
+        }}
+      </Route>
     </Switch>
   );
 }
