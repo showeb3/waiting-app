@@ -1,0 +1,63 @@
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/NotFound";
+import { Route, Switch } from "wouter";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import Home from "./pages/Home";
+import GuestReception from "./pages/GuestReception";
+import TicketDisplay from "./pages/TicketDisplay";
+import KioskReception from "./pages/KioskReception";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminSettings from "./pages/AdminSettings";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+function Router() {
+  return (
+    <Switch>
+      {/* Home */}
+      <Route path={"/"} component={Home} />
+
+      {/* Guest Routes */}
+      <Route path={"/w/:storeSlug"} component={GuestReception} />
+      <Route path={"/w/:storeSlug/ticket/:token"} component={TicketDisplay} />
+
+      {/* Kiosk Route */}
+      <Route path={"/kiosk/:storeSlug"} component={KioskReception} />
+
+      {/* Admin Routes */}
+      {/* Admin Routes */}
+      <Route path="/admin/:storeSlug">
+        {(params) => {
+          console.log("[Router] Matching /admin route", params);
+          return <ProtectedRoute component={AdminDashboard} {...params} />;
+        }}
+      </Route>
+      <Route path="/admin/:storeSlug/settings">
+        {(params) => <ProtectedRoute component={AdminSettings} {...params} />}
+      </Route>
+
+      {/* 404 */}
+      <Route path={"/404"} component={NotFound} />
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <ThemeProvider defaultTheme="light">
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  );
+}
+
+export default App;
