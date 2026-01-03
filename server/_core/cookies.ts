@@ -39,10 +39,16 @@ export function getSessionCookieOptions(
   //       ? hostname
   //       : undefined;
 
+  const isProduction = process.env.NODE_ENV === 'production';
+  const isSecure = isSecureRequest(req);
+
   return {
     httpOnly: true,
     path: "/",
-    sameSite: isSecureRequest(req) ? "none" : "lax",
-    secure: isSecureRequest(req),
+    // In production, always use 'none' for cross-origin cookies (Cloudflare Pages -> Render.com)
+    // In development, use 'lax' for localhost
+    sameSite: isProduction ? "none" : (isSecure ? "none" : "lax"),
+    // Must be secure when using SameSite=None
+    secure: isProduction ? true : isSecure,
   };
 }
