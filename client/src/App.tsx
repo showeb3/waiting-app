@@ -11,13 +11,18 @@ import TicketDisplay from "./pages/TicketDisplay";
 import KioskReception from "./pages/KioskReception";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminSettings from "./pages/AdminSettings";
+import AdminSettings from "./pages/AdminSettings";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AuthCallback from "./pages/AuthCallback";
 
 function Router() {
   return (
     <Switch>
       {/* Home */}
       <Route path={"/"} component={Home} />
+
+      {/* Auth Callback - Handled by Frontend */}
+      <Route path={"/auth/callback"} component={AuthCallback} />
 
       {/* Guest Routes */}
       <Route path={"/w/:storeSlug"} component={GuestReception} />
