@@ -346,9 +346,9 @@ export const appRouter = router({
 
     // Get store settings
     getStore: adminProcedure
-      .input(z.object({ storeSlug: z.string() }))
+      .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
-        const store = await getStoreBySlug(input.storeSlug);
+        const store = await getStoreBySlug(input.slug);
         if (!store) {
           throw new TRPCError({
             code: "NOT_FOUND",

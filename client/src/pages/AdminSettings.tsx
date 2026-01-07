@@ -32,7 +32,6 @@ export default function AdminSettings() {
   const [formData, setFormData] = useState({
     notificationThreshold3: 3,
     notificationThreshold1: 1,
-    notificationThreshold1: 1,
     skipRecoveryMode: "end" as "end" | "near" | "resubmit",
     printMethod: "local_bridge" as "local_bridge" | "direct",
     autoResetSeconds: 5,
