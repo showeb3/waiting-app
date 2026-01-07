@@ -24,7 +24,7 @@ export default function AdminSettings() {
 
   // Fetch store settings
   const { data: store, isLoading } = trpc.admin.getStore.useQuery(
-    { storeSlug },
+    { slug: storeSlug },
     { enabled: !!storeSlug }
   );
 
