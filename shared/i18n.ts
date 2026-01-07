@@ -28,7 +28,7 @@ export const translations = {
     // Guest - QR Reception
     guest: {
       title: "順番待ち受付",
-      enterName: "お名前（ニックネーム可）",
+      enterName: "お名前",
       enterPartySize: "人数",
       submit: "受付する",
       nameRequired: "お名前を入力してください",
@@ -346,7 +346,7 @@ export const translations = {
     // Guest - QR Reception
     guest: {
       title: "等候登记",
-      enterName: "请输入您的姓名（可用昵称）",
+      enterName: "请输入您的姓名",
       enterPartySize: "人数",
       submit: "登记",
       nameRequired: "请输入姓名",
@@ -506,7 +506,7 @@ export const translations = {
     // Guest - QR Reception
     guest: {
       title: "대기 등록",
-      enterName: "이름을 입력하세요 (닉네임 가능)",
+      enterName: "이름을 입력하세요",
       enterPartySize: "인원",
       submit: "등록",
       nameRequired: "이름을 입력해주세요",
