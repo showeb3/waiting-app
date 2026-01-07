@@ -9,11 +9,25 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Determine storage key based on current path
+function getStorageKey(): string {
+  if (typeof window === "undefined") return "language";
+
+  const path = window.location.pathname;
+
+  if (path.startsWith("/admin")) return "language-admin";
+  if (path.startsWith("/kiosk")) return "language-kiosk";
+  if (path.startsWith("/store") || path.startsWith("/ticket")) return "language-guest";
+
+  return "language";
+}
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     // Try to get from localStorage first
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("language");
+      const storageKey = getStorageKey();
+      const saved = localStorage.getItem(storageKey);
       if (saved === "ja" || saved === "en") {
         return saved;
       }
@@ -25,7 +39,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     if (typeof window !== "undefined") {
-      localStorage.setItem("language", lang);
+      const storageKey = getStorageKey();
+      localStorage.setItem(storageKey, lang);
     }
   };
 
