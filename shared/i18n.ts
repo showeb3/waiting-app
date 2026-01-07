@@ -186,7 +186,7 @@ export const translations = {
     // Guest - QR Reception
     guest: {
       title: "Waiting List Registration",
-      enterName: "Your Name (Nickname OK)",
+      enterName: "Your Name",
       enterPartySize: "Party Size",
       submit: "Register",
       nameRequired: "Please enter your name",
