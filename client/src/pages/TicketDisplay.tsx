@@ -305,6 +305,8 @@ export default function TicketDisplay() {
         <div className="flex gap-2">
           <Button variant={language === "ja" ? "default" : "outline"} size="sm" onClick={() => setLanguage("ja")}>日本語</Button>
           <Button variant={language === "en" ? "default" : "outline"} size="sm" onClick={() => setLanguage("en")}>English</Button>
+          <Button variant={language === "zh" ? "default" : "outline"} size="sm" onClick={() => setLanguage("zh")}>中文</Button>
+          <Button variant={language === "ko" ? "default" : "outline"} size="sm" onClick={() => setLanguage("ko")}>한국어</Button>
         </div>
       </div>
 

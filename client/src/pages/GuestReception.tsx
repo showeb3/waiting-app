@@ -78,6 +78,20 @@ export default function GuestReception(props: any) {
           >
             English
           </Button>
+          <Button
+            variant={language === "zh" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setLanguage("zh")}
+          >
+            中文
+          </Button>
+          <Button
+            variant={language === "ko" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setLanguage("ko")}
+          >
+            한국어
+          </Button>
         </div>
       </div>
 
