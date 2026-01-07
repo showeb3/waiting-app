@@ -4,7 +4,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { drizzle } from "drizzle-orm/d1";
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
-import { eq, sql, and, or } from "drizzle-orm";
+import { eq, sql, and, or, gte } from "drizzle-orm";
 import superjson from "superjson";
 
 interface Env {
@@ -196,7 +196,7 @@ const appRouter = t.router({
                     .from(tickets)
                     .where(and(
                         eq(tickets.storeId, store.id),
-                        sql`${tickets.createdAt} >= ${effectiveBoundary}`
+                        gte(tickets.createdAt, effectiveBoundary)
                     ))
                     .get();
 
