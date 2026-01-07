@@ -23,7 +23,9 @@ import {
   updatePrintJobStatus,
   getStaffByStoreId,
   getStoresByUserId,
+
   updateTicketNotificationState,
+  updateStoreNumberingReset,
 } from "./db";
 import { adminProcedure } from "./_core/trpc";
 import { COOKIE_NAME } from "@shared/const";
@@ -368,10 +370,27 @@ export const appRouter = router({
           notificationThreshold1: z.number().optional(),
           skipRecoveryMode: z.enum(["end", "near", "resubmit"]).optional(),
           printMethod: z.enum(["local_bridge", "direct"]).optional(),
+          autoResetSeconds: z.number().optional(),
         })
       )
       .mutation(async ({ input }) => {
         // TODO: Implement store update logic
+        return { success: true };
+      }),
+
+    // Reset numbering
+    resetNumbering: adminProcedure
+      .input(z.object({ slug: z.string() }))
+      .mutation(async ({ input }) => {
+        const store = await getStoreBySlug(input.slug);
+        if (!store) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Store not found",
+          });
+        }
+
+        await updateStoreNumberingReset(input.slug);
         return { success: true };
       }),
   }),

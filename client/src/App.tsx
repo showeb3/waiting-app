@@ -46,6 +46,10 @@ function Router() {
       <Route path={"/404"} component={NotFound} />
       {/* 404 */}
       <Route path={"/404"} component={NotFound} />
+
+      {/* Short URL fallback (must be after other specific routes) */}
+      <Route path="/:storeSlug" component={GuestReception} />
+
       <Route>
         {(params) => {
           console.log("[Router] No match found. Current params:", params);

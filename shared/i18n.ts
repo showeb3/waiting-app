@@ -51,6 +51,16 @@ export const translations = {
       refreshing: "更新中...",
       groups: "組",
       minutes: "分",
+      soundReady: "音声の準備ができました 🔊",
+      yourTurn: "順番が来ました！",
+      checkSilentMode: "音が鳴らない場合はマナーモードを確認してください",
+      soundGuidanceTitle: "順番が来ると画面が変わり、音が鳴ります。画面を開いたままでお待ちください",
+      soundTest: "🔊 音量テスト",
+      appNotification: "アプリで通知を受け取る（上級者向け）",
+      iosPushError: "iPhoneの場合は、シェアボタンから「ホーム画面に追加」してから通知を設定してください",
+      comingSoon: "もうすぐ順番です",
+      cancelGuidance: "キャンセルする場合はキャンセルボタンを押してください",
+      skipWarning: "順番が来た際にお店にいらっしゃらない場合は、次の方をご案内（スキップ）させていただきます",
     },
 
     // Kiosk
@@ -114,6 +124,10 @@ export const translations = {
       skipRecoveryResubmit: "再受付必須",
       save: "保存",
       saved: "設定を保存しました",
+      numberingReset: "採番リセット",
+      manualReset: "1番に戻す",
+      resetConfirm: "チケット番号を1番にリセットしますか？この操作は取り消せません。現在待機中のお客様がいる場合、番号の重複が発生する可能性があります。",
+      resetSuccess: "チケット番号をリセットしました",
     },
 
     // Notifications
@@ -195,6 +209,16 @@ export const translations = {
       refreshing: "Refreshing...",
       groups: "groups",
       minutes: "min",
+      soundReady: "Sound ready 🔊",
+      yourTurn: "It's your turn!",
+      checkSilentMode: "If no sound, please check your silent mode",
+      soundGuidanceTitle: "When your turn comes, the screen will change and sound will play. Please keep this screen open while waiting.",
+      soundTest: "🔊 Sound Test",
+      appNotification: "Get App Notifications (Advanced)",
+      iosPushError: "For iPhone, please 'Add to Home Screen' from the Share menu before enabling notifications",
+      comingSoon: "Your turn is coming soon",
+      cancelGuidance: "Please press Cancel if you wish to cancel",
+      skipWarning: "If you are not present when called, we may proceed to the next guest (skip)",
     },
 
     // Kiosk
@@ -258,6 +282,10 @@ export const translations = {
       skipRecoveryResubmit: "Require re-registration",
       save: "Save",
       saved: "Settings saved",
+      numberingReset: "Reset Ticket Numbering",
+      manualReset: "Reset to #1",
+      resetConfirm: "Are you sure you want to reset the ticket numbering to #1? This action cannot be undone.",
+      resetSuccess: "Ticket numbering reset successfully",
     },
 
     // Notifications

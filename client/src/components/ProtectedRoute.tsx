@@ -36,6 +36,7 @@ export default function ProtectedRoute({ component: Component, ...props }: Prote
       navigate("/");
       return;
     }
+
   }, [loading, isAuthenticated, user, navigate]);
 
   if (loading) {
@@ -47,20 +48,10 @@ export default function ProtectedRoute({ component: Component, ...props }: Prote
     );
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-500">Redirecting to login...</p>
-      </div>
-    );
-  }
-
-  if (!user?.role) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-red-500">Access Denied: Invalid Role</p>
-      </div>
-    );
+  // DebugUI removed, now relying on useEffect redirect logic for cleaner UX
+  // But strictly enforcing render blocking if not authenticated
+  if (!isAuthenticated && !loading) {
+    return null; // Will redirect via useEffect
   }
 
   try {
@@ -69,8 +60,13 @@ export default function ProtectedRoute({ component: Component, ...props }: Prote
     console.error("[ProtectedRoute] Component Render Error:", err);
     return (
       <div className="p-8 text-center text-red-500">
-        <h1>Render Error</h1>
-        <p>{String(err)}</p>
+        <p>Something went wrong loading this page.</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-gray-100 rounded hover:bg-gray-200"
+        >
+          Reload Page
+        </button>
       </div>
     );
   }

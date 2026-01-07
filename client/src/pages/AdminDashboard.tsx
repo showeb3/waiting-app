@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 
 export default function AdminDashboard() {
+  console.log("[AdminDashboard] Mounting dashboard component");
   const [, params] = useRoute("/admin/:storeSlug");
   const [, navigate] = useLocation();
   const { t } = useLanguage();
@@ -39,7 +40,7 @@ export default function AdminDashboard() {
     },
   });
 
-  const seatMutation = trpc.admin.seat.useMutation({
+  const seatMutation = trpc.admin.completeTicket.useMutation({
     onSuccess: () => {
       toast.success("Ticket seated");
       refetch();
@@ -91,23 +92,23 @@ export default function AdminDashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "WAITING":
+      case "waiting":
         return "bg-blue-100 text-blue-800";
-      case "CALLED":
+      case "called":
         return "bg-yellow-100 text-yellow-800";
-      case "SEATED":
+      case "seated":
         return "bg-green-100 text-green-800";
-      case "SKIPPED":
+      case "skipped":
         return "bg-orange-100 text-orange-800";
-      case "CANCELLED":
+      case "cancelled":
         return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
 
-  const waitingTickets = tickets.filter((t) => t.status === "WAITING");
-  const calledTickets = tickets.filter((t) => t.status === "CALLED");
+  const waitingTickets = tickets.filter((t) => t.status === "waiting");
+  const calledTickets = tickets.filter((t) => t.status === "called");
 
   if (isLoading) {
     return (

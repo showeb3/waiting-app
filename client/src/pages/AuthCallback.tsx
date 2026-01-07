@@ -23,15 +23,13 @@ export default function AuthCallback() {
                 console.log("[AuthCallback] Starting authentication with code:", code?.substring(0, 10) + "...");
 
                 // Construct the callback URL using environment variable
-                const apiUrl = import.meta.env.VITE_API_URL || '';
-                const callbackUrl = `${apiUrl}/api/oauth/callback?code=${code}&state=${state}`;
+                // Use relative path for same-origin request
+                const callbackUrl = `/api/oauth/callback?code=${code}&state=${state}`;
                 console.log("[AuthCallback] Calling:", callbackUrl);
 
                 // Pass the request to the backend directly
-                // credentials: 'include' ensures cookies are sent and received
                 const response = await fetch(callbackUrl, {
                     method: "GET",
-                    credentials: 'include', // Critical: allows cookies to be set
                     headers: {
                         "Accept": "application/json"
                     }
@@ -43,8 +41,11 @@ export default function AuthCallback() {
                     const data = await response.json();
                     console.log("[AuthCallback] Success:", data);
 
-                    // Give the browser a moment to process the cookie
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    // Store token if present
+                    if (data.token) {
+                        localStorage.setItem("session_token", data.token);
+                        console.log("[AuthCallback] Token stored in localStorage");
+                    }
 
                     // Navigate to admin dashboard
                     navigate("/admin/demo");

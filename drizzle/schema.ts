@@ -43,6 +43,7 @@ export const stores = mysqlTable("stores", {
   skipRecoveryMode: mysqlEnum("skipRecoveryMode", ["end", "near", "resubmit"]).default("end").notNull(), // A/B/C
   printMethod: mysqlEnum("printMethod", ["local_bridge", "direct"]).default("local_bridge").notNull(),
   kioskSettings: text("kioskSettings"), // JSON: { autoResetSeconds: 5, fontSize: "large" }
+  lastNumberingResetAt: timestamp("lastNumberingResetAt"), // 手動/自動リセットの基準日時
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

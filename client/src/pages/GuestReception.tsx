@@ -8,8 +8,15 @@ import { Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
-export default function GuestReception() {
-  const [, params] = useRoute("/w/:storeSlug");
+export default function GuestReception(props: any) {
+  // Try to get params from props (if passed by Route) or use hook as fallback
+  const [match, hookParams] = useRoute("/w/:storeSlug");
+
+  // Logic: 
+  // 1. props.params.storeSlug (from /:storeSlug route)
+  // 2. hookParams.storeSlug (from /w/:storeSlug route via hook if props not passed)
+  const storeSlug = props?.params?.storeSlug || hookParams?.storeSlug || "";
+
   const [, navigate] = useLocation();
   const { language, setLanguage, t } = useLanguage();
 
@@ -44,7 +51,7 @@ export default function GuestReception() {
 
     setIsLoading(true);
     createTicketMutation.mutate({
-      storeSlug: params?.storeSlug || "",
+      storeSlug,
       guestName: guestName.trim(),
       partySize: size,
       source: "qr",

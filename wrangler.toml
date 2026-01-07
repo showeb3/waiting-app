@@ -1,0 +1,15 @@
+name = "waiting-management-app"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist/public"
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "waiting-management-db"
+database_id = "8e51466d-0bf7-4d47-8d34-4126459ec9eb"
+
+# Environment Variables
+[vars]
+NODE_ENV = "production"
+VITE_APP_ID = "waiting-app"
+VITE_OAUTH_PORTAL_URL = ""  # Will be set after deployment

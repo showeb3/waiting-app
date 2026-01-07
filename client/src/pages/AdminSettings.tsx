@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRoute, useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -28,14 +28,30 @@ export default function AdminSettings() {
     { enabled: !!storeSlug }
   );
 
-  // Form state
+  // Load initial settings
   const [formData, setFormData] = useState({
     notificationThreshold3: 3,
     notificationThreshold1: 1,
-    skipRecoveryMode: "end" as const,
-    printMethod: "local_bridge" as const,
+    notificationThreshold1: 1,
+    skipRecoveryMode: "end" as "end" | "near" | "resubmit",
+    printMethod: "local_bridge" as "local_bridge" | "direct",
     autoResetSeconds: 5,
   });
+
+  // Effect to update form data when store data is loaded
+  useEffect(() => {
+    if (store && (store as any).settings) {
+      try {
+        const settings = JSON.parse((store as any).settings);
+        setFormData(prev => ({
+          ...prev,
+          ...settings
+        }));
+      } catch (e) {
+        console.error("Failed to parse settings", e);
+      }
+    }
+  }, [store]);
 
   // Update mutation
   const updateMutation = trpc.admin.updateStore.useMutation({
@@ -45,15 +61,26 @@ export default function AdminSettings() {
     onError: (error) => {
       toast.error(error.message);
     },
+
+  });
+
+  const resetNumberingMutation = trpc.admin.resetNumbering.useMutation({
+    onSuccess: () => {
+      toast.success(t("settings.resetSuccess"));
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   const handleSave = () => {
     updateMutation.mutate({
-      storeSlug,
+      storeSlug: storeSlug, // Corrected parameter name
       notificationThreshold3: formData.notificationThreshold3,
       notificationThreshold1: formData.notificationThreshold1,
-      skipRecoveryMode: formData.skipRecoveryMode,
-      printMethod: formData.printMethod,
+      skipRecoveryMode: formData.skipRecoveryMode as "end" | "near" | "resubmit",
+      printMethod: formData.printMethod as "local_bridge" | "direct",
+      autoResetSeconds: formData.autoResetSeconds,
     });
   };
 
@@ -64,6 +91,8 @@ export default function AdminSettings() {
       </div>
     );
   }
+
+  // ... (rest of the component remains same)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -194,6 +223,38 @@ export default function AdminSettings() {
               max="30"
             />
           </div>
+
+        </Card>
+
+        {/* Ticket Numbering Reset */}
+        <Card className="p-6 bg-white border-red-200">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">
+            {t("settings.numberingReset")}
+          </h2>
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              {t("settings.resetConfirm")}
+            </p>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (confirm(t("settings.resetConfirm"))) {
+                  resetNumberingMutation.mutate({ slug: storeSlug });
+                }
+              }}
+              disabled={resetNumberingMutation.isPending}
+              className="w-full sm:w-auto"
+            >
+              {resetNumberingMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("common.loading")}
+                </>
+              ) : (
+                t("settings.manualReset")
+              )}
+            </Button>
+          </div>
         </Card>
 
         {/* Save Button */}
@@ -211,7 +272,7 @@ export default function AdminSettings() {
             t("settings.save")
           )}
         </Button>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

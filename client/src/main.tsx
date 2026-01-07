@@ -42,14 +42,19 @@ queryClient.getMutationCache().subscribe(event => {
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      // Use environment variable for API URL, fallback to relative path for development
-      url: import.meta.env.VITE_API_URL
-        ? `${import.meta.env.VITE_API_URL}/api/trpc`
-        : "/api/trpc",
+      // Use absolute URL to ensure proper cookie handling
+      url: typeof window !== "undefined" ? `${window.location.origin}/api/trpc` : "/api/trpc",
       transformer: superjson,
       fetch(input, init) {
+        const token = localStorage.getItem("session_token");
+        const headers = new Headers(init?.headers);
+        if (token) {
+          headers.set("Authorization", `Bearer ${token}`);
+        }
+
         return globalThis.fetch(input, {
           ...(init ?? {}),
+          headers,
           credentials: "include",
         });
       },

@@ -332,3 +332,16 @@ export async function updateTicketNotificationState(
 
   await db.update(tickets).set(updateData).where(eq(tickets.id, ticketId));
 }
+
+// Numbering Reset Helpers
+export async function updateStoreNumberingReset(
+  storeSlug: string
+): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(stores)
+    .set({ lastNumberingResetAt: new Date() })
+    .where(eq(stores.slug, storeSlug));
+}
