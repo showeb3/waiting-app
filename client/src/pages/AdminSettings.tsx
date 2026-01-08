@@ -14,6 +14,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function AdminSettings() {
   const [, params] = useRoute("/admin/:storeSlug/settings");
@@ -234,25 +245,41 @@ export default function AdminSettings() {
             <p className="text-sm text-gray-600">
               {t("settings.resetConfirm")}
             </p>
-            <Button
-              variant="destructive"
-              onClick={() => {
-                if (confirm(t("settings.resetConfirm"))) {
-                  resetNumberingMutation.mutate({ slug: storeSlug });
-                }
-              }}
-              disabled={resetNumberingMutation.isPending}
-              className="w-full sm:w-auto"
-            >
-              {resetNumberingMutation.isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("common.loading")}
-                </>
-              ) : (
-                t("settings.manualReset")
-              )}
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  disabled={resetNumberingMutation.isPending}
+                  className="w-full sm:w-auto"
+                >
+                  {resetNumberingMutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t("common.loading")}
+                    </>
+                  ) : (
+                    t("settings.manualReset")
+                  )}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t("settings.warning")}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {t("settings.resetConfirm")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => resetNumberingMutation.mutate({ slug: storeSlug })}
+                    className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                  >
+                    {t("settings.manualReset")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </Card>
 
