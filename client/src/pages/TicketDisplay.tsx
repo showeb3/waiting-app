@@ -330,6 +330,9 @@ export default function TicketDisplay() {
                 <div className="mt-4 p-2 bg-red-100 text-red-700 font-bold rounded-lg text-lg animate-bounce">
                   {t("ticket.yourTurn")}
                 </div>
+                <div className="mt-2 text-sm font-bold text-red-600 bg-white/80 p-2 rounded border border-red-200">
+                  {t("ticket.cancellationPolicy")}
+                </div>
               )}
 
               {isNear && !isCalled && (

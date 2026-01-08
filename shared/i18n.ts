@@ -61,6 +61,7 @@ export const translations = {
       comingSoon: "もうすぐ順番です",
       cancelGuidance: "キャンセルする場合はキャンセルボタンを押してください",
       skipWarning: "順番が来た際にお店にいらっしゃらない場合は、次の方をご案内（スキップ）させていただきます",
+      cancellationPolicy: "15分経ってもいらっしゃらない場合にはキャンセルさせていただきます",
     },
 
     // Kiosk
@@ -219,6 +220,7 @@ export const translations = {
       comingSoon: "Your turn is coming soon",
       cancelGuidance: "Please press Cancel if you wish to cancel",
       skipWarning: "If you are not present when called, we may proceed to the next guest (skip)",
+      cancellationPolicy: "If you do not arrive within 15 minutes, your reservation will be cancelled.",
     },
 
     // Kiosk
@@ -378,7 +380,8 @@ export const translations = {
       iosPushError: "iPhone用户请先从分享按钮选择\"添加到主屏幕\"后再设置通知",
       comingSoon: "即将轮到您",
       cancelGuidance: "如需取消请点击取消按钮",
-      skipWarning: "如果叫号时您不在场，我们将叫下一位客人（跳过）",
+      skipWarning: "如果在呼叫时您不在场，我们将接待下一位客人（跳过）",
+      cancellationPolicy: "如果在15分钟内未到达，我们将取消您的预约。",
     },
 
     // Kiosk
@@ -538,7 +541,8 @@ export const translations = {
       iosPushError: "iPhone의 경우 공유 버튼에서 '홈 화면에 추가'를 먼저 한 후 알림을 설정해주세요",
       comingSoon: "곧 차례입니다",
       cancelGuidance: "취소하시려면 취소 버튼을 눌러주세요",
-      skipWarning: "호출 시 자리에 계시지 않으면 다음 손님을 안내할 수 있습니다 (건너뛰기)",
+      skipWarning: "호출 시 부재중인 경우 다음 손님을 안내해 드립니다 (건너뛰기)",
+      cancellationPolicy: "15분 이내에 도착하지 않으시면 대기가 취소됩니다.",
     },
 
     // Kiosk
